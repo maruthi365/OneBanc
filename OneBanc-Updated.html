@@ -92,9 +92,6 @@ body{
         "TRANSACTION AMOUNT " + "<br />" +  "₹" + data.transactions[i].amount + "<br />" + "Transaction Id " + "<br />" +
         data.transactions[i].id + "<br />";
         document.getElementById("main").appendChild(div);
-
-        document.getElementById("result").innerHTML="Date of transaction : " + data.transactions[i].startDate + "<br />" + "AMOUNT IN TRANSACTION :" + "<br />" +  "₹" + data.transactions[i].amount + "<br />" + "Transaction Id " + "<br />" +
-        data.transactions[i].id + "<br />";
       }
       console.log(data)
     }
