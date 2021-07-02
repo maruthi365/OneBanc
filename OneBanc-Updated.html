@@ -17,10 +17,6 @@ body{
     border : 3px solid green;
     padding : 10px;
   }
-  #result{
-    float: right;
-    border: 1px solid black;
-  }
 </style>
 <body>
   <script>
@@ -46,51 +42,52 @@ body{
         div.style.background = "white";
         div.style.border = "1px solid #000000";
         div.style.color = "black";
-        div.innerHTML =  data.transactions[i].startDate;
+        div.innerHTML = data.transactions[i].startDate+'&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp';
 
-        if(data.transactions[i].direction=="1" && data.transactions[i].status=="1" && data.transactions[i].type=="1"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "Your payment is pending";
+       if(data.transactions[i].direction=="1" && data.transactions[i].status=="1" && data.transactions[i].type=="1"){
+          div.innerHTML +=  "your payment is pending";
+          div.style.textAlign = "right";
         }
         else if(data.transactions[i].direction=="1" && data.transactions[i].status=="2" && data.transactions[i].type=="1"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "You paid";
+          div.innerHTML += "You Paid";
+          div.style.textAlign = "right";
         }
         else if(data.transactions[i].direction=="1" && data.transactions[i].status=="3" && data.transactions[i].type=="1"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "your payment time expired";
+          div.innerHTML += "your payment time expired";
+          div.style.textAlign = "right";
         }
         else if(data.transactions[i].direction=="1" && data.transactions[i].status=="4" && data.transactions[i].type=="1"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "your payment has been rejected";
+          div.innerHTML += "your payment has been rejected";
+          div.style.textAlign = "right";
         }
         else if(data.transactions[i].direction=="2" && data.transactions[i].status=="1" && data.transactions[i].type=="1"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "your receivement is pending";
+          div.innerHTML += "your receivement is pending";
         }
         else if(data.transactions[i].direction=="2" && data.transactions[i].status=="2" && data.transactions[i].type=="1"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "You recieved";
+          div.innerHTML += "You recieved";
         }
         else if(data.transactions[i].direction=="2" && data.transactions[i].status=="3" && data.transactions[i].type=="1"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "your receive time expired";
+          div.innerHTML += "your receive time expired";
         }
         else if(data.transactions[i].direction=="2" && data.transactions[i].status=="4" && data.transactions[i].type=="1"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "your receive has been rejected";
+          div.innerHTML += "your receive has been rejected";
         }
         else if(data.transactions[i].direction=="1" && data.transactions[i].type=="2"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "You requested";
+          div.innerHTML += "You requested";
+          div.style.textAlign = "right";
         }
         else if(data.transactions[i].direction=="2" && data.transactions[i].type=="2"){
-          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
-          "Request recieved";
+          div.innerHTML += "Requested recieved";
         }
         div.innerHTML += "<br />" +
-        "TRANSACTION AMOUNT " + "<br />" +  "₹" + data.transactions[i].amount + "<br />" + "Transaction Id " + "<br />" +
+        "TRANSACTION AMOUNT"+"<br>"+"₹" + data.transactions[i].amount + "<br />" + "Transaction Id : " + 
         data.transactions[i].id + "<br />";
+        if(data.transactions[i].direction=="1" && data.transactions[i].type=="2") div.innerHTML += '<button id="btn" name="btn">Cancel</button>';
+        else if(data.transactions[i].direction=="2" && data.transactions[i].type=="2"){
+            div.innerHTML += '<button id="btn" name="btn">Pay</button>';
+            div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp';
+            div.innerHTML += '<button id="btn" name="btn">Decline</button>';
+        }
         document.getElementById("main").appendChild(div);
       }
       console.log(data)
@@ -100,8 +97,6 @@ body{
   <fieldset>
   <div id="main"></div>
   </fieldset>
-  <fieldset>
   <div id="result"></div>
-  </fieldset>
 </body>
 </html>
