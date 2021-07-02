@@ -1,0 +1,110 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OneBanc</title>
+</head>
+<style>
+body{
+  margin-right: 500px;
+  margin-left: 500px;
+}
+  .main{
+    position: absolute;
+    left : 100px;
+    width : 100%;
+    border : 3px solid green;
+    padding : 10px;
+  }
+  #result{
+    float: right;
+    border: 1px solid black;
+  }
+</style>
+<body>
+  <script>
+    const api_url = 'https://dev.onebanc.ai/assignment.asmx/GetTransactionHistory?userId=1&recipientId=2'
+    async function getISS() {
+      const response = await fetch(api_url)
+      const data = await response.json()
+      console.log(data.transactions.length)
+      var customer = document.createElement("div");
+      customer.style.width = "50px";
+      customer.style.height = "50px";
+      customer.style.background = "white";
+      customer.style.textAlign = "center"
+      customer.style.color = "black"
+      customer.style.fontSize = "20px"
+      customer.innerHTML +=  data.transactions[0].partner.vPay
+      document.getElementById("main").appendChild(customer);
+      for(i=0;i<data.transactions.length;++i){
+        var div = document.createElement("div");
+        var break1 = document.createElement("br");
+        div.style.width = "400px";
+        div.style.height = "100px";
+        div.style.background = "white";
+        div.style.border = "1px solid #000000";
+        div.style.color = "black";
+        div.innerHTML =  data.transactions[i].startDate;
+
+        if(data.transactions[i].direction=="1" && data.transactions[i].status=="1" && data.transactions[i].type=="1"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "Your payment is pending";
+        }
+        else if(data.transactions[i].direction=="1" && data.transactions[i].status=="2" && data.transactions[i].type=="1"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "You paid";
+        }
+        else if(data.transactions[i].direction=="1" && data.transactions[i].status=="3" && data.transactions[i].type=="1"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "your payment time expired";
+        }
+        else if(data.transactions[i].direction=="1" && data.transactions[i].status=="4" && data.transactions[i].type=="1"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "your payment has been rejected";
+        }
+        else if(data.transactions[i].direction=="2" && data.transactions[i].status=="1" && data.transactions[i].type=="1"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "your receivement is pending";
+        }
+        else if(data.transactions[i].direction=="2" && data.transactions[i].status=="2" && data.transactions[i].type=="1"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "You recieved";
+        }
+        else if(data.transactions[i].direction=="2" && data.transactions[i].status=="3" && data.transactions[i].type=="1"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "your receive time expired";
+        }
+        else if(data.transactions[i].direction=="2" && data.transactions[i].status=="4" && data.transactions[i].type=="1"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "your receive has been rejected";
+        }
+        else if(data.transactions[i].direction=="1" && data.transactions[i].type=="2"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "You requested";
+        }
+        else if(data.transactions[i].direction=="2" && data.transactions[i].type=="2"){
+          div.innerHTML += '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + '&nbsp' + 
+          "Request recieved";
+        }
+        div.innerHTML += "<br />" +
+        "TRANSACTION AMOUNT " + "<br />" +  "₹" + data.transactions[i].amount + "<br />" + "Transaction Id " + "<br />" +
+        data.transactions[i].id + "<br />";
+        document.getElementById("main").appendChild(div);
+
+        document.getElementById("result").innerHTML="Date of transaction : " + data.transactions[i].startDate + "<br />" + "AMOUNT IN TRANSACTION :" + "<br />" +  "₹" + data.transactions[i].amount + "<br />" + "Transaction Id " + "<br />" +
+        data.transactions[i].id + "<br />";
+      }
+      console.log(data)
+    }
+    getISS();
+  </script>
+  <fieldset>
+  <div id="main"></div>
+  </fieldset>
+  <fieldset>
+  <div id="result"></div>
+  </fieldset>
+</body>
+</html>
